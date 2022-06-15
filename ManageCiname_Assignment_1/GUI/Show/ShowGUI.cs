@@ -1,5 +1,6 @@
-﻿using ManageCiname_Assignment_1.DAL;
-using ManageCiname_Assignment_1.DTL;
+﻿using Ciname.GUI.BookingController;
+using Ciname.DAL;
+using Ciname.DTL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -77,33 +78,43 @@ namespace Ciname.GUI.ShowControl
         
         private void showGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if(e.ColumnIndex == showGridView.Columns["Edit"].Index)
+            if (e.RowIndex< showGridView.Rows.Count-1) 
             {
                 int showId = (int)showGridView.Rows[e.RowIndex].Cells["ShowID"].Value;
                 Show show = ShowDAO.get(showId);
-                ShowAddEditGUI showAddEditGUI = new ShowAddEditGUI(show);
-                DialogResult dialogResult =  showAddEditGUI.ShowDialog();
-                if(dialogResult == DialogResult.OK)
-                {
-                    showGridView.Columns.Clear();
-                    showGridView.Refresh();
-                    DataTable dataTable = ShowDAO.GetDataTable();
-                    loadData(dataTable);
+                if (e.ColumnIndex == showGridView.Columns["Edit"].Index)
+                { 
+                    ShowAddEditGUI showAddEditGUI = new ShowAddEditGUI(show);
+                    DialogResult dialogResult = showAddEditGUI.ShowDialog();
+                    if (dialogResult == DialogResult.OK)
+                    {
+                        showGridView.Columns.Clear();
+                        showGridView.Refresh();
+                        DataTable dataTable = ShowDAO.GetDataTable();
+                        loadData(dataTable);
+                    }
                 }
-            }else if(e.ColumnIndex == showGridView.Columns["Delete"].Index)
-            {
-                DialogResult dialogResult = 
-                    MessageBox.Show("Do you wan't delete?",null,MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if(dialogResult == DialogResult.Yes)
+                else if (e.ColumnIndex == showGridView.Columns["Delete"].Index)
                 {
-                    int showId = (int)showGridView.Rows[e.RowIndex].Cells["ShowID"].Value;
-                    ShowDAO.Delete(showId);
-                    showGridView.Columns.Clear();
-                    showGridView.Refresh();
-                    DataTable dataTable = ShowDAO.GetDataTable();
-                    loadData(dataTable);
+                    DialogResult dialogResult =
+                        MessageBox.Show("Do you wan't delete?", null, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        ShowDAO.Delete(showId);
+                        showGridView.Columns.Clear();
+                        showGridView.Refresh();
+                        DataTable dataTable = ShowDAO.GetDataTable();
+                        loadData(dataTable);
+                    }
                 }
+                else if (e.ColumnIndex == showGridView.Columns["Booking"].Index)
+                {
+                    BookingGUI bookingGUI = new BookingGUI(show);
+                    DialogResult dialogResult = bookingGUI.ShowDialog();
+                }
+
             }
+                
         }
 
         private void btnCreate_Click(object sender, EventArgs e)

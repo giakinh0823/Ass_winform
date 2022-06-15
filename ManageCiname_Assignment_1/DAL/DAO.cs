@@ -1,18 +1,24 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ManageCiname_Assignment_1.DAL
+namespace Ciname.DAL
 {
     public class DAO
     {
         public static SqlConnection GetConnection()
         {
-            string ConnectionStr = "server=localhost;database=Cinema;user=sa;password=12345678";
+            var conf = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", true, true)
+                .Build();
+            string ConnectionStr = conf.GetConnectionString("DbConnection");
             return new SqlConnection(ConnectionStr);
         }
 

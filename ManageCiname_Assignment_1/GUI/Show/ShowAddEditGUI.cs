@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ManageCiname_Assignment_1.DAL;
-using ManageCiname_Assignment_1.DTL;
+using Ciname.DAL;
+using Ciname.DTL;
 
 namespace Ciname.GUI.ShowControl
 {
@@ -38,7 +38,7 @@ namespace Ciname.GUI.ShowControl
             }
             else
             {
-                show = null;
+                this.show = null;
             }
         }
 
