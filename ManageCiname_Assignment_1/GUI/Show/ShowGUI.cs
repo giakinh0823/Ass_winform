@@ -78,7 +78,7 @@ namespace Ciname.GUI.ShowControl
         
         private void showGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex< showGridView.Rows.Count-1) 
+            if (e.RowIndex< showGridView.Rows.Count-1 && e.RowIndex >= 0) 
             {
                 int showId = (int)showGridView.Rows[e.RowIndex].Cells["ShowID"].Value;
                 Show show = ShowDAO.get(showId);

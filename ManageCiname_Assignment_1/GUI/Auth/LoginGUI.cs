@@ -51,5 +51,10 @@ namespace Ciname.GUI.AuthControl
                 login();
             }
         }
+
+        private void textBoxUsername_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

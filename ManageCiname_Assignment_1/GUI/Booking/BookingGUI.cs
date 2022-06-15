@@ -145,7 +145,7 @@ namespace Ciname.GUI.BookingController
 
         private void bookingGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < bookingGridView.Rows.Count - 1)
+            if (e.RowIndex < bookingGridView.Rows.Count - 1 && e.RowIndex >=0 )
             {
                 int bookingId = (int)bookingGridView.Rows[e.RowIndex].Cells["BookingID"].Value;
                 Booking booking = BookingDAO.Get(bookingId);

@@ -51,6 +51,7 @@
             // 
             resources.ApplyResources(this.textBoxUsername, "textBoxUsername");
             this.textBoxUsername.Name = "textBoxUsername";
+            this.textBoxUsername.TextChanged += new System.EventHandler(this.textBoxUsername_TextChanged);
             // 
             // textBoxPassword
             // 
