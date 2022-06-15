@@ -14,8 +14,11 @@ namespace Ciname.GUI.AuthControl
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            Button btnLogin = (Button)sender;
-            Console.WriteLine(Directory.GetCurrentDirectory());
+            login();
+        }
+        
+        private void login()
+        {
             string username, password;
             var conf = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -27,6 +30,7 @@ namespace Ciname.GUI.AuthControl
             {
                 Setting.Username = username;
                 MessageBox.Show("You are logged in as administrator");
+                this.DialogResult = DialogResult.OK;
             }
             else
             {
@@ -38,6 +42,14 @@ namespace Ciname.GUI.AuthControl
         private void LoginGUI_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void textBoxPassword_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                login();
+            }
         }
     }
 }

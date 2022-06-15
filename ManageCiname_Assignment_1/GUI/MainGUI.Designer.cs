@@ -27,7 +27,6 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loginToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,8 +64,7 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newToolStripMenuItem,
-            this.exitToolStripMenuItem,
-            this.loginToolStripMenuItem1});
+            this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(62, 34);
             this.fileToolStripMenuItem.Text = "File";
@@ -83,12 +81,6 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(315, 40);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // loginToolStripMenuItem1
-            // 
-            this.loginToolStripMenuItem1.Name = "loginToolStripMenuItem1";
-            this.loginToolStripMenuItem1.Size = new System.Drawing.Size(315, 40);
-            this.loginToolStripMenuItem1.Text = "Login";
             // 
             // editToolStripMenuItem
             // 
@@ -225,7 +217,6 @@
         private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loginToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loginToolStripMenuItem1;
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
         private System.Windows.Forms.ToolStrip toolStripMenu;
         private System.Windows.Forms.ToolStripButton CinameToolStripButton;

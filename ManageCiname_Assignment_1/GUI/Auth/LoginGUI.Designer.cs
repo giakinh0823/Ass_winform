@@ -57,6 +57,7 @@
             resources.ApplyResources(this.textBoxPassword, "textBoxPassword");
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.UseSystemPasswordChar = true;
+            this.textBoxPassword.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxPassword_KeyDown);
             // 
             // btnLogin
             // 
