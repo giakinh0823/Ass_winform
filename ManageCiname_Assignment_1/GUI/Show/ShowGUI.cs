@@ -67,7 +67,7 @@ namespace Ciname.GUI.ShowControl
             };
 
             showGridView.Columns.Add(btnDelete);
-            labelTotalNumber.Text = showGridView.Rows.Count.ToString();
+            labelTotalNumber.Text = (showGridView.Rows.Count-1).ToString();
         }
 
         private void showGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -139,7 +139,7 @@ namespace Ciname.GUI.ShowControl
             showGridView.Refresh();
             DataTable dataTable = ShowDAO.FindByRoomAndFilmAndDateDataTable(this.dateTimePicker.Value, filmId, roomId);
             loadData(dataTable);
-            labelTotalNumber.Text = showGridView.Rows.Count.ToString();
+            labelTotalNumber.Text = (showGridView.Rows.Count-1).ToString();
         }
 
         private void ShowGUI_Activated(object sender, EventArgs e)
