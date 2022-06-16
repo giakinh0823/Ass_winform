@@ -17,6 +17,7 @@ namespace Ciname.GUI
         public MainGUI()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void MainGUI_Load(object sender, EventArgs e)
@@ -70,11 +71,20 @@ namespace Ciname.GUI
             showGUI.FormBorderStyle = FormBorderStyle.None;
             showGUI.TopLevel = false;
             showGUI.Show();
+            toolStripContainer1.ContentPanel.Width = showGUI.Width;
+            toolStripContainer1.ContentPanel.Height = showGUI.Height;
             toolStripContainer1.ContentPanel.Controls.Clear();
             toolStripContainer1.ContentPanel.Controls.Add(showGUI);
+            this.Width = toolStripContainer1.Width;
+            this.Height = toolStripContainer1.Height + menuStrip.Height + toolStripContainer1.BottomToolStripPanel.Height + toolStripContainer1.TopToolStripPanel.Height - 10;
         }
 
         private void toolStripContainer1_ContentPanel_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripContainer1_TopToolStripPanel_Click(object sender, EventArgs e)
         {
 
         }

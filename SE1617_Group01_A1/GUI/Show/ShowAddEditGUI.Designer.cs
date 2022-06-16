@@ -47,26 +47,29 @@
             // 
             this.cBoxRoom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBoxRoom.FormattingEnabled = true;
-            this.cBoxRoom.Location = new System.Drawing.Point(283, 74);
+            this.cBoxRoom.Location = new System.Drawing.Point(165, 37);
+            this.cBoxRoom.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cBoxRoom.Name = "cBoxRoom";
-            this.cBoxRoom.Size = new System.Drawing.Size(351, 38);
+            this.cBoxRoom.Size = new System.Drawing.Size(206, 23);
             this.cBoxRoom.TabIndex = 0;
             // 
             // labelRoom
             // 
             this.labelRoom.AutoSize = true;
-            this.labelRoom.Location = new System.Drawing.Point(182, 77);
+            this.labelRoom.Location = new System.Drawing.Point(106, 38);
+            this.labelRoom.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelRoom.Name = "labelRoom";
-            this.labelRoom.Size = new System.Drawing.Size(72, 30);
+            this.labelRoom.Size = new System.Drawing.Size(42, 15);
             this.labelRoom.TabIndex = 1;
             this.labelRoom.Text = "Room:";
             // 
             // Date
             // 
             this.Date.AutoSize = true;
-            this.Date.Location = new System.Drawing.Point(192, 148);
+            this.Date.Location = new System.Drawing.Point(112, 74);
+            this.Date.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Date.Name = "Date";
-            this.Date.Size = new System.Drawing.Size(62, 30);
+            this.Date.Size = new System.Drawing.Size(34, 15);
             this.Date.TabIndex = 3;
             this.Date.Text = "Date:";
             // 
@@ -74,18 +77,20 @@
             // 
             this.dateTimePicker.CustomFormat = "dd-MM-yyyy";
             this.dateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker.Location = new System.Drawing.Point(283, 148);
+            this.dateTimePicker.Location = new System.Drawing.Point(165, 74);
+            this.dateTimePicker.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dateTimePicker.Name = "dateTimePicker";
-            this.dateTimePicker.Size = new System.Drawing.Size(350, 35);
+            this.dateTimePicker.Size = new System.Drawing.Size(206, 23);
             this.dateTimePicker.TabIndex = 4;
             this.dateTimePicker.ValueChanged += new System.EventHandler(this.dateTimePicker_ValueChanged);
             // 
             // labelSlot
             // 
             this.labelSlot.AutoSize = true;
-            this.labelSlot.Location = new System.Drawing.Point(201, 231);
+            this.labelSlot.Location = new System.Drawing.Point(117, 116);
+            this.labelSlot.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelSlot.Name = "labelSlot";
-            this.labelSlot.Size = new System.Drawing.Size(53, 30);
+            this.labelSlot.Size = new System.Drawing.Size(30, 15);
             this.labelSlot.TabIndex = 5;
             this.labelSlot.Text = "Slot:";
             this.labelSlot.Click += new System.EventHandler(this.labelSlot_Click);
@@ -94,42 +99,47 @@
             // 
             this.cBoxFilm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBoxFilm.FormattingEnabled = true;
-            this.cBoxFilm.Location = new System.Drawing.Point(282, 311);
+            this.cBoxFilm.Location = new System.Drawing.Point(164, 156);
+            this.cBoxFilm.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cBoxFilm.Name = "cBoxFilm";
-            this.cBoxFilm.Size = new System.Drawing.Size(350, 38);
+            this.cBoxFilm.Size = new System.Drawing.Size(206, 23);
             this.cBoxFilm.TabIndex = 6;
             // 
             // labelFirm
             // 
             this.labelFirm.AutoSize = true;
-            this.labelFirm.Location = new System.Drawing.Point(198, 311);
+            this.labelFirm.Location = new System.Drawing.Point(115, 156);
+            this.labelFirm.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelFirm.Name = "labelFirm";
-            this.labelFirm.Size = new System.Drawing.Size(56, 30);
+            this.labelFirm.Size = new System.Drawing.Size(33, 15);
             this.labelFirm.TabIndex = 7;
             this.labelFirm.Text = "Film:";
             // 
             // textBoxPrice
             // 
-            this.textBoxPrice.Location = new System.Drawing.Point(282, 394);
+            this.textBoxPrice.Location = new System.Drawing.Point(164, 197);
+            this.textBoxPrice.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxPrice.Name = "textBoxPrice";
-            this.textBoxPrice.Size = new System.Drawing.Size(350, 35);
+            this.textBoxPrice.Size = new System.Drawing.Size(206, 23);
             this.textBoxPrice.TabIndex = 9;
             // 
             // labelPrice
             // 
             this.labelPrice.AutoSize = true;
-            this.labelPrice.Location = new System.Drawing.Point(191, 394);
+            this.labelPrice.Location = new System.Drawing.Point(111, 197);
+            this.labelPrice.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelPrice.Name = "labelPrice";
-            this.labelPrice.Size = new System.Drawing.Size(63, 30);
+            this.labelPrice.Size = new System.Drawing.Size(36, 15);
             this.labelPrice.TabIndex = 10;
             this.labelPrice.Text = "Price:";
             // 
             // btnSave
             // 
             this.btnSave.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnSave.Location = new System.Drawing.Point(212, 506);
+            this.btnSave.Location = new System.Drawing.Point(117, 244);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(135, 51);
+            this.btnSave.Size = new System.Drawing.Size(91, 35);
             this.btnSave.TabIndex = 11;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -138,9 +148,10 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(481, 506);
+            this.btnCancel.Location = new System.Drawing.Point(272, 244);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(140, 51);
+            this.btnCancel.Size = new System.Drawing.Size(99, 35);
             this.btnCancel.TabIndex = 12;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -149,26 +160,28 @@
             // 
             this.cBoxSlot.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBoxSlot.FormattingEnabled = true;
-            this.cBoxSlot.Location = new System.Drawing.Point(283, 230);
+            this.cBoxSlot.Location = new System.Drawing.Point(165, 115);
+            this.cBoxSlot.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cBoxSlot.Name = "cBoxSlot";
-            this.cBoxSlot.Size = new System.Drawing.Size(351, 38);
+            this.cBoxSlot.Size = new System.Drawing.Size(206, 23);
             this.cBoxSlot.TabIndex = 13;
             // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(854, 202);
+            this.checkBox1.Location = new System.Drawing.Point(498, 101);
+            this.checkBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(137, 34);
+            this.checkBox1.Size = new System.Drawing.Size(83, 19);
             this.checkBox1.TabIndex = 14;
             this.checkBox1.Text = "checkBox1";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // ShowAddEditGUI
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(841, 652);
+            this.ClientSize = new System.Drawing.Size(491, 326);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.cBoxSlot);
             this.Controls.Add(this.btnCancel);
@@ -183,6 +196,7 @@
             this.Controls.Add(this.labelRoom);
             this.Controls.Add(this.cBoxRoom);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "ShowAddEditGUI";
             this.Text = "Add/Edit";
             this.ResumeLayout(false);

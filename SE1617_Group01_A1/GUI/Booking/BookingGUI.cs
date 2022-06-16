@@ -36,43 +36,38 @@ namespace Ciname.GUI.BookingController
         public void CreateCheckbox()
         {
            int count = 0;
-           for(int i = 0; i < 10; i++)
+           for(int i = 0; i < 100; i++)
            {
-                for (int j = 0; j < 10; j++)
-                {
-                    CheckBox checkBox = new CheckBox();
-                    checkBox.AutoSize = true;
-                    checkBox.Enabled = false;
-                    checkBox.Location = new Point(this.Location.X + this.Width/2 - (10*30/2) + j * 30, this.Location.Y + i * 30 + 50);
-                    this.Controls.Add(checkBox);
-                    checkBoxes[count] = checkBox;
-                    count++;
-                }
-           }   
+                CheckBox checkBox = new CheckBox();
+                checkBox.AutoSize = true;
+                checkBox.Enabled = false;
+                checkBoxes[count] = checkBox;
+                this.flowLayoutPanel.Controls.Add(checkBox);
+                count++;
+            }
         }
 
 
         public void UpDateCheckBox()
         {
+            this.flowLayoutPanel.Controls.Clear();
             int count = 0;
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
-                for (int j = 0; j < 10; j++)
+                CheckBox checkBox = checkBoxes[count];
+                if (this.seats[count].Equals('1'))
                 {
-                    CheckBox checkBox = checkBoxes[count];
-                    if (this.seats[count].Equals('1'))
-                    {
-                        checkBox.Checked = true;
-                    }
-                    else
-                    {
-                        checkBox.Checked = false;
-                    }
-                    checkBox.Enabled = false;
-                    this.Controls.Add(checkBox);
-                    checkBoxes[count] = checkBox;
-                    count++;
+                    checkBox.Checked = true;
                 }
+                else
+                {
+                    checkBox.Checked = false;
+                }
+                checkBox.Enabled = false;
+                this.Controls.Add(checkBox);
+                checkBoxes[count] = checkBox;
+                this.flowLayoutPanel.Controls.Add(checkBox);
+                count++;
             }
         }
 
@@ -173,6 +168,7 @@ namespace Ciname.GUI.BookingController
                 }
             }   
         }
+
     }
 
 }

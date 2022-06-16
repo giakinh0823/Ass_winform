@@ -53,10 +53,10 @@ namespace Ciname.GUI.BookingController
                         checkBox.Enabled = false;
                     }
                     checkBox.AutoSize = true;
-                    checkBox.Location = new Point(this.Location.X + this.Width / 2 - (10 * 30 / 2) + j * 30, this.Location.Y + i * 30 + 80);
                     this.Controls.Add(checkBox);
                     checkBoxes[count] = checkBox;
                     count++;
+                    this.flowLayoutPanel.Controls.Add(checkBox);
                 }
             }
         }
