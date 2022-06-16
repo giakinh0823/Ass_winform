@@ -76,7 +76,14 @@ namespace Ciname.GUI.ShowControl
 
             if (show != null)
             {
-                show.Slot = int.Parse(slotParam);
+                int slot = int.Parse(slotParam);
+                if (ShowDAO.GetItemByDateAndSlotAndRoom(show.ShowDate, slot, show.RoomId) != null)
+                {
+                    MessageBox.Show("Slot has been selected!");
+                    this.DialogResult = DialogResult.None;
+                    return;
+                }
+                show.Slot = slot;
                 show.FilmId = int.Parse(filmParam);
                 show.Price = price;
                 ShowDAO.Update(show);
@@ -102,6 +109,7 @@ namespace Ciname.GUI.ShowControl
                 {
                     MessageBox.Show("Slot has been selected!");
                     this.DialogResult = DialogResult.None;
+                    return;
                 }
                 
             }
