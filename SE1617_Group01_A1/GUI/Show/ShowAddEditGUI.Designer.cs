@@ -48,7 +48,7 @@
             this.cBoxRoom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBoxRoom.FormattingEnabled = true;
             this.cBoxRoom.Location = new System.Drawing.Point(165, 37);
-            this.cBoxRoom.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cBoxRoom.Margin = new System.Windows.Forms.Padding(2);
             this.cBoxRoom.Name = "cBoxRoom";
             this.cBoxRoom.Size = new System.Drawing.Size(206, 23);
             this.cBoxRoom.TabIndex = 0;
@@ -78,7 +78,7 @@
             this.dateTimePicker.CustomFormat = "dd-MM-yyyy";
             this.dateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dateTimePicker.Location = new System.Drawing.Point(165, 74);
-            this.dateTimePicker.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dateTimePicker.Margin = new System.Windows.Forms.Padding(2);
             this.dateTimePicker.Name = "dateTimePicker";
             this.dateTimePicker.Size = new System.Drawing.Size(206, 23);
             this.dateTimePicker.TabIndex = 4;
@@ -100,7 +100,7 @@
             this.cBoxFilm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBoxFilm.FormattingEnabled = true;
             this.cBoxFilm.Location = new System.Drawing.Point(164, 156);
-            this.cBoxFilm.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cBoxFilm.Margin = new System.Windows.Forms.Padding(2);
             this.cBoxFilm.Name = "cBoxFilm";
             this.cBoxFilm.Size = new System.Drawing.Size(206, 23);
             this.cBoxFilm.TabIndex = 6;
@@ -118,7 +118,7 @@
             // textBoxPrice
             // 
             this.textBoxPrice.Location = new System.Drawing.Point(164, 197);
-            this.textBoxPrice.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxPrice.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxPrice.Name = "textBoxPrice";
             this.textBoxPrice.Size = new System.Drawing.Size(206, 23);
             this.textBoxPrice.TabIndex = 9;
@@ -137,7 +137,7 @@
             // 
             this.btnSave.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnSave.Location = new System.Drawing.Point(117, 244);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(2);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(91, 35);
             this.btnSave.TabIndex = 11;
@@ -149,7 +149,7 @@
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new System.Drawing.Point(272, 244);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(99, 35);
             this.btnCancel.TabIndex = 12;
@@ -161,7 +161,7 @@
             this.cBoxSlot.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBoxSlot.FormattingEnabled = true;
             this.cBoxSlot.Location = new System.Drawing.Point(165, 115);
-            this.cBoxSlot.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cBoxSlot.Margin = new System.Windows.Forms.Padding(2);
             this.cBoxSlot.Name = "cBoxSlot";
             this.cBoxSlot.Size = new System.Drawing.Size(206, 23);
             this.cBoxSlot.TabIndex = 13;
@@ -170,7 +170,7 @@
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.Location = new System.Drawing.Point(498, 101);
-            this.checkBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBox1.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(83, 19);
             this.checkBox1.TabIndex = 14;
@@ -196,8 +196,9 @@
             this.Controls.Add(this.labelRoom);
             this.Controls.Add(this.cBoxRoom);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ShowAddEditGUI";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Add/Edit";
             this.ResumeLayout(false);
             this.PerformLayout();

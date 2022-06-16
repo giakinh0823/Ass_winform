@@ -33,6 +33,7 @@ namespace Ciname.GUI
             {
                 loginToolStripMenuItem.Click -= loginToolStripMenuItem_Click;
                 loginToolStripMenuItem.Click += btnLogout_Click;
+                toolStripContainer1.ContentPanel.Controls.Clear();
             }
         }
 
@@ -41,11 +42,9 @@ namespace Ciname.GUI
             if(Setting.Username != null)
             {
                 loginToolStripMenuItem.Text = $"Logout ({Setting.Username})";
-                this.showToolStripMenuItem.Visible = true;
             }
             else
             {
-                this.showToolStripMenuItem.Visible = false;
                 loginToolStripMenuItem.Text = "Login";
             }
         }

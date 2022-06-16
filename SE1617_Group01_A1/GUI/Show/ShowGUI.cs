@@ -17,9 +17,11 @@ namespace Ciname.GUI.ShowControl
     {
         public ShowGUI()
         {
-            if(Setting.Username != null)
+            InitializeComponent();
+            this.btnCreate.Visible = false;
+            if (Setting.Username != null)
             {
-                InitializeComponent();
+                this.btnCreate.Visible = true;
             }
         }
 
@@ -39,35 +41,50 @@ namespace Ciname.GUI.ShowControl
         
             showGridView.DataSource = dataTable;
             int countColumn = dataTable.Columns.Count;
-
-            DataGridViewButtonColumn btnBooking = new DataGridViewButtonColumn
-            {
-                Name = "Booking",
-                Text = "Booking",
-                UseColumnTextForButtonValue = true
-            };
-
-            showGridView.Columns.Insert(countColumn, btnBooking);
             showGridView.Columns["ShowID"].Visible = false;
             showGridView.Columns["Status"].Visible = false;
 
-            DataGridViewButtonColumn btnEdit = new DataGridViewButtonColumn
+            if (Setting.Username != null)
             {
-                Name = "Edit",
-                Text = "Edit",
-                UseColumnTextForButtonValue = true
-            };
+                DataGridViewButtonColumn btnBooking = new DataGridViewButtonColumn
+                {
+                    Name = "Booking",
+                    Text = "Booking",
+                    UseColumnTextForButtonValue = true
+                };
 
-            showGridView.Columns.Add(btnEdit);
+                showGridView.Columns.Insert(countColumn, btnBooking);
+              
 
-            DataGridViewButtonColumn btnDelete = new DataGridViewButtonColumn
+                DataGridViewButtonColumn btnEdit = new DataGridViewButtonColumn
+                {
+                    Name = "Edit",
+                    Text = "Edit",
+                    UseColumnTextForButtonValue = true
+                };
+
+                showGridView.Columns.Add(btnEdit);
+
+                DataGridViewButtonColumn btnDelete = new DataGridViewButtonColumn
+                {
+                    Name = "Delete",
+                    Text = "Delete",
+                    UseColumnTextForButtonValue = true
+                };
+
+                showGridView.Columns.Add(btnDelete);
+            }
+            else
             {
-                Name = "Delete",
-                Text = "Delete",
-                UseColumnTextForButtonValue = true
-            };
+                DataGridViewButtonColumn btnBooking = new DataGridViewButtonColumn
+                {
+                    Name = "Booking",
+                    Text = "View seat",
+                    UseColumnTextForButtonValue = true
+                };
 
-            showGridView.Columns.Add(btnDelete);
+                showGridView.Columns.Insert(countColumn, btnBooking);
+            }
             labelTotalNumber.Text = (showGridView.Rows.Count-1).ToString();
         }
 
@@ -82,35 +99,46 @@ namespace Ciname.GUI.ShowControl
             {
                 int showId = (int)showGridView.Rows[e.RowIndex].Cells["ShowID"].Value;
                 Show show = ShowDAO.get(showId);
-                if (e.ColumnIndex == showGridView.Columns["Edit"].Index)
-                { 
-                    ShowAddEditGUI showAddEditGUI = new ShowAddEditGUI(show);
-                    DialogResult dialogResult = showAddEditGUI.ShowDialog();
-                    if (dialogResult == DialogResult.OK)
+                if (Setting.Username != null)
+                {
+                    if (e.ColumnIndex == showGridView.Columns["Edit"].Index)
                     {
-                        showGridView.Columns.Clear();
-                        showGridView.Refresh();
-                        DataTable dataTable = ShowDAO.GetDataTable();
-                        loadData(dataTable);
+                        ShowAddEditGUI showAddEditGUI = new ShowAddEditGUI(show);
+                        DialogResult dialogResult = showAddEditGUI.ShowDialog();
+                        if (dialogResult == DialogResult.OK)
+                        {
+                            showGridView.Columns.Clear();
+                            showGridView.Refresh();
+                            DataTable dataTable = ShowDAO.GetDataTable();
+                            loadData(dataTable);
+                        }
+                    }
+                    else if (e.ColumnIndex == showGridView.Columns["Delete"].Index)
+                    {
+                        DialogResult dialogResult =
+                            MessageBox.Show("Do you wan't delete?", null, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (dialogResult == DialogResult.Yes)
+                        {
+                            ShowDAO.Delete(showId);
+                            showGridView.Columns.Clear();
+                            showGridView.Refresh();
+                            DataTable dataTable = ShowDAO.GetDataTable();
+                            loadData(dataTable);
+                        }
+                    }
+                    else if (e.ColumnIndex == showGridView.Columns["Booking"].Index)
+                    {
+                        BookingGUI bookingGUI = new BookingGUI(show);
+                        DialogResult dialogResult = bookingGUI.ShowDialog();
                     }
                 }
-                else if (e.ColumnIndex == showGridView.Columns["Delete"].Index)
+                else
                 {
-                    DialogResult dialogResult =
-                        MessageBox.Show("Do you wan't delete?", null, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (dialogResult == DialogResult.Yes)
+                    if (e.ColumnIndex == showGridView.Columns["Booking"].Index)
                     {
-                        ShowDAO.Delete(showId);
-                        showGridView.Columns.Clear();
-                        showGridView.Refresh();
-                        DataTable dataTable = ShowDAO.GetDataTable();
-                        loadData(dataTable);
+                        ViewSeatGUI viewSeatGUI = new ViewSeatGUI(show);
+                        DialogResult dialogResult = viewSeatGUI.ShowDialog();
                     }
-                }
-                else if (e.ColumnIndex == showGridView.Columns["Booking"].Index)
-                {
-                    BookingGUI bookingGUI = new BookingGUI(show);
-                    DialogResult dialogResult = bookingGUI.ShowDialog();
                 }
 
             }
@@ -119,14 +147,17 @@ namespace Ciname.GUI.ShowControl
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            ShowAddEditGUI showAddEditGUI = new ShowAddEditGUI(null);
-            DialogResult dialogResult = showAddEditGUI.ShowDialog();
-            if (dialogResult == DialogResult.OK)
+            if (Setting.Username != null)
             {
-                showGridView.Columns.Clear();
-                showGridView.Refresh();
-                DataTable dataTable = ShowDAO.GetDataTable();
-                loadData(dataTable);
+                ShowAddEditGUI showAddEditGUI = new ShowAddEditGUI(null);
+                DialogResult dialogResult = showAddEditGUI.ShowDialog();
+                if (dialogResult == DialogResult.OK)
+                {
+                    showGridView.Columns.Clear();
+                    showGridView.Refresh();
+                    DataTable dataTable = ShowDAO.GetDataTable();
+                    loadData(dataTable);
+                }
             }
         }
 

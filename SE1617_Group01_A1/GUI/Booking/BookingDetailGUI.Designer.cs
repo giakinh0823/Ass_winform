@@ -38,63 +38,65 @@
             // 
             // textBoxAmount
             // 
-            this.textBoxAmount.Location = new System.Drawing.Point(501, 598);
-            this.textBoxAmount.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.textBoxAmount.Location = new System.Drawing.Point(292, 299);
+            this.textBoxAmount.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxAmount.Name = "textBoxAmount";
-            this.textBoxAmount.Size = new System.Drawing.Size(309, 35);
+            this.textBoxAmount.Size = new System.Drawing.Size(182, 23);
             this.textBoxAmount.TabIndex = 15;
             // 
             // textBoxName
             // 
-            this.textBoxName.Location = new System.Drawing.Point(501, 522);
-            this.textBoxName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.textBoxName.Location = new System.Drawing.Point(292, 261);
+            this.textBoxName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(309, 35);
+            this.textBoxName.Size = new System.Drawing.Size(182, 23);
             this.textBoxName.TabIndex = 14;
             // 
             // labelAmount
             // 
             this.labelAmount.AutoSize = true;
-            this.labelAmount.Location = new System.Drawing.Point(377, 602);
+            this.labelAmount.Location = new System.Drawing.Point(220, 301);
+            this.labelAmount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelAmount.Name = "labelAmount";
-            this.labelAmount.Size = new System.Drawing.Size(93, 30);
+            this.labelAmount.Size = new System.Drawing.Size(54, 15);
             this.labelAmount.TabIndex = 13;
             this.labelAmount.Text = "Amount:";
             // 
             // labelName
             // 
             this.labelName.AutoSize = true;
-            this.labelName.Location = new System.Drawing.Point(396, 522);
+            this.labelName.Location = new System.Drawing.Point(231, 261);
+            this.labelName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelName.Name = "labelName";
-            this.labelName.Size = new System.Drawing.Size(74, 30);
+            this.labelName.Size = new System.Drawing.Size(42, 15);
             this.labelName.TabIndex = 12;
             this.labelName.Text = "Name:";
             // 
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(585, 682);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnCancel.Location = new System.Drawing.Point(341, 341);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(141, 58);
+            this.btnCancel.Size = new System.Drawing.Size(82, 29);
             this.btnCancel.TabIndex = 16;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
             // flowLayoutPanel
             // 
-            this.flowLayoutPanel.Location = new System.Drawing.Point(422, 30);
-            this.flowLayoutPanel.Margin = new System.Windows.Forms.Padding(10);
+            this.flowLayoutPanel.Location = new System.Drawing.Point(246, 15);
+            this.flowLayoutPanel.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.flowLayoutPanel.Name = "flowLayoutPanel";
-            this.flowLayoutPanel.Size = new System.Drawing.Size(441, 398);
+            this.flowLayoutPanel.Size = new System.Drawing.Size(257, 199);
             this.flowLayoutPanel.TabIndex = 17;
             // 
             // BookingDetailGUI
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1219, 829);
+            this.ClientSize = new System.Drawing.Size(711, 414);
             this.ControlBox = false;
             this.Controls.Add(this.flowLayoutPanel);
             this.Controls.Add(this.btnCancel);
@@ -103,8 +105,9 @@
             this.Controls.Add(this.labelAmount);
             this.Controls.Add(this.labelName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "BookingDetailGUI";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "BookingDetail";
             this.ResumeLayout(false);
             this.PerformLayout();

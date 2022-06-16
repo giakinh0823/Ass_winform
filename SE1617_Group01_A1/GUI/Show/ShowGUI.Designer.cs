@@ -177,6 +177,7 @@
             this.Controls.Add(this.showGridView);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ShowGUI";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ShowGUI";
             this.Activated += new System.EventHandler(this.ShowGUI_Activated);
             this.Load += new System.EventHandler(this.ShowGUI_Load);
