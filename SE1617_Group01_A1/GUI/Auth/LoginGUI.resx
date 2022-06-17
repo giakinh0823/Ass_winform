@@ -166,7 +166,7 @@
     <value>107, 124</value>
   </data>
   <data name="btnLogin.Size" type="System.Drawing.Size, System.Drawing">
-    <value>69, 20</value>
+    <value>67, 28</value>
   </data>
   <data name="btnLogin.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -193,7 +193,7 @@
     <value>248, 124</value>
   </data>
   <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>64, 20</value>
+    <value>66, 28</value>
   </data>
   <data name="btnCancel.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
