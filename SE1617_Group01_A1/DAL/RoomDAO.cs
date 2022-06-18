@@ -20,10 +20,10 @@ namespace Ciname.DAL
             {
                 list.Add(new Room()
                 {
-                    RoomId = (int)dr["ShowID"],
-                    Name = (string)dr["FilmID"],
-                    NumberRows = (int)dr["Slot"],
-                    NumberCols = (int)dr["Slot"]
+                    RoomId = (int)dr["RoomID"],
+                    Name = (string)dr["Name"],
+                    NumberRows = (int)dr["NumberRows"],
+                    NumberCols = (int)dr["NumberCols"]
                 });
             }
             return list;
@@ -42,10 +42,10 @@ namespace Ciname.DAL
                 DataRow dr = dataTable.Rows[0];
                 return new Room()
                 {
-                    RoomId = (int)dr["ShowID"],
-                    Name = (string)dr["FilmID"],
-                    NumberRows = (int)dr["Slot"],
-                    NumberCols = (int)dr["Slot"]
+                    RoomId = (int)dr["RoomID"],
+                    Name = (string)dr["Name"],
+                    NumberRows = (int)dr["NumberRows"],
+                    NumberCols = (int)dr["NumberCols"]
                 };
             }
             return null;

@@ -94,6 +94,73 @@ namespace Ciname.DAL
         }
 
 
+        public static List<Show>? GetItemByDate(DateTime Date)
+        {
+            string sql = "SELECT [ShowID] ,[RoomID] ,[FilmID] ,[ShowDate] ,[Price] ,[Status] ,[Slot] " +
+                         " FROM [Shows]" +
+                         " WHERE YEAR([ShowDate]) = YEAR(@ShowDate) " +
+                         "  AND MONTH([ShowDate]) = MONTH(@ShowDate)" +
+                         "  AND DAY([ShowDate]) = DAY(@ShowDate)";
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = new SqlParameter("@ShowDate", DbType.Date);
+            parameters[0].Value = Date;
+            DataTable dataTable = GetDataBySql(sql, parameters);
+            if (dataTable != null && dataTable.Rows != null && dataTable.Rows.Count > 0)
+            {
+                List<Show> list = new List<Show>();
+                foreach (DataRow dr in dataTable.Rows)
+                {
+                    list.Add(new Show()
+                    {
+                        ShowId = (int)dr["ShowID"],
+                        RoomId = (int)dr["RoomID"],
+                        FilmId = (int)dr["FilmID"],
+                        ShowDate = (DateTime)dr["ShowDate"],
+                        Price = (decimal)dr["Price"],
+                        Status = (bool)dr["status"],
+                        Slot = (int)dr["Slot"]
+                    });
+                }
+                return list;
+            }
+            return null;
+        }
+
+        public static List<Show>? GetItemByDate(DateTime Date, int roomId)
+        {
+            string sql = "SELECT [ShowID] ,[RoomID] ,[FilmID] ,[ShowDate] ,[Price] ,[Status] ,[Slot] " +
+                         " FROM [Shows]" +
+                         " WHERE YEAR([ShowDate]) = YEAR(@ShowDate) " +
+                         "  AND MONTH([ShowDate]) = MONTH(@ShowDate)" +
+                         "  AND DAY([ShowDate]) = DAY(@ShowDate) " +
+                         "  AND [RoomID] = @RoomID";
+            SqlParameter[] parameters = new SqlParameter[2];
+            parameters[0] = new SqlParameter("@ShowDate", DbType.Date);
+            parameters[0].Value = Date;
+            parameters[1] = new SqlParameter("@RoomID", DbType.Int32);
+            parameters[1].Value = roomId;
+            DataTable dataTable = GetDataBySql(sql, parameters);
+            if (dataTable != null && dataTable.Rows != null && dataTable.Rows.Count > 0)
+            {
+                List<Show> list = new List<Show>();
+                foreach (DataRow dr in dataTable.Rows)
+                {
+                    list.Add(new Show()
+                    {
+                        ShowId = (int)dr["ShowID"],
+                        RoomId = (int)dr["RoomID"],
+                        FilmId = (int)dr["FilmID"],
+                        ShowDate = (DateTime)dr["ShowDate"],
+                        Price = (decimal)dr["Price"],
+                        Status = (bool)dr["status"],
+                        Slot = (int)dr["Slot"]
+                    });
+                }
+                return list;
+            }
+            return null;
+        }
+
         public static List<Show>? FindByRoomAndFilmAndDate(DateTime Date, int film, int Room)
         {
             string sql = "SELECT [ShowID] ,[RoomID] ,[FilmID] ,[ShowDate] ,[Price] ,[Status] ,[Slot] " +
@@ -215,7 +282,8 @@ namespace Ciname.DAL
         public static DataTable GetDataTable()
         {
             string sql = "SELECT [ShowID] ,[RoomID] ,[FilmID] ,[ShowDate] ,[Price] ,[Status] ,[Slot] " +
-                         "FROM [Shows]";
+                         "FROM [Shows]" +
+                         " ORDER BY [ShowID] DESC";
             DataTable dataTable = GetDataBySql(sql);
             return dataTable;
         }

@@ -16,12 +16,18 @@ namespace Ciname.GUI.BookingController
     {
         private Show? show = null;
         private CheckBox[]? checkBoxes = null;
-        private char[] seats = new char[100];
+        private int col = 0;
+        private int row = 0;
+        private char[]? seats = null;
         public BookingGUI(Show? show)
         {
             InitializeComponent();
-            checkBoxes = new CheckBox[100];
-            if(show != null)
+            Room? room = show!= null? RoomDAO.Get(show.RoomId): null;
+            this.col = room!=null ? room.NumberCols : 0;
+            this.row = room != null ? room.NumberRows : 0;
+            checkBoxes = new CheckBox[this.col * this.row];
+            seats = new char[this.col * this.row];
+            if (show != null)
             {
                 CreateCheckbox();
                 this.show = show;
@@ -32,44 +38,70 @@ namespace Ciname.GUI.BookingController
             {
                 this.show = null;
             }
+            if (Setting.Username == null)
+            {
+                this.btnCreate.Visible = false;
+            }
         }
         public void CreateCheckbox()
         {
-           int count = 0;
-           for(int i = 0; i < 100; i++)
-           {
-                CheckBox checkBox = new CheckBox();
-                checkBox.AutoSize = true;
-                checkBox.Enabled = false;
-                checkBoxes[count] = checkBox;
-                this.flowLayoutPanel.Controls.Add(checkBox);
-                count++;
+            if (checkBoxes != null)
+            {
+                int count = 0;
+                for (int i = 0; i < this.row; i++)
+                {
+                    for (int j = 0; j < this.col; j++)
+                    {
+                        CheckBox checkBox = new CheckBox();
+                        checkBox.AutoSize = true;
+                        checkBox.Width = 84;
+                        checkBox.Enabled = false;
+                        checkBox.Anchor = AnchorStyles.None;
+                        checkBoxes[count] = checkBox;
+                        this.flowLayoutPanel.Controls.Add(checkBox);
+                        count++;
+                        if (j + 1 == this.col)
+                        {
+                            this.flowLayoutPanel.SetFlowBreak(checkBox, true);
+                        }
+                    }
+                }
             }
         }
 
 
         public void UpDateCheckBox()
         {
-            this.flowLayoutPanel.Controls.Clear();
-            int count = 0;
-            for (int i = 0; i < 100; i++)
+            if (checkBoxes != null)
             {
-                CheckBox checkBox = checkBoxes[count];
-                if (this.seats[count].Equals('1'))
+                this.flowLayoutPanel.Controls.Clear();
+                int count = 0;
+                for (int i = 0; i < this.row; i++)
                 {
-                    checkBox.Checked = true;
+                    for (int j = 0; j < this.col; j++)
+                    {
+                        CheckBox checkBox = checkBoxes[count];
+                        if (this.seats !=null && this.seats[count].Equals('1'))
+                        {
+                            checkBox.Checked = true;
+                        }
+                        else
+                        {
+                            checkBox.Checked = false;
+                        }
+                        checkBoxes[count] = checkBox;
+                        this.flowLayoutPanel.Controls.Add(checkBox);
+                        if (j + 1 == this.col)
+                        {
+                            this.flowLayoutPanel.SetFlowBreak(checkBox, true);
+                        }
+                        count++;
+                    }
                 }
-                else
-                {
-                    checkBox.Checked = false;
-                }
-                checkBox.Enabled = false;
-                this.Controls.Add(checkBox);
-                checkBoxes[count] = checkBox;
-                this.flowLayoutPanel.Controls.Add(checkBox);
-                count++;
+                this.flowLayoutPanel.AutoScroll = true;
             }
         }
+
 
 
         private void BookingGUI_Load(object sender, EventArgs e)
@@ -79,7 +111,10 @@ namespace Ciname.GUI.BookingController
 
         private void loadData(DataTable dataTable)
         {
-            Array.Fill(this.seats, '0');
+            if (this.seats != null)
+            {
+                Array.Fill(this.seats, '0');
+            }
             bookingGridView.DataSource = dataTable;
             bookingGridView.Columns["BookingID"].Visible = false;
             bookingGridView.Columns["ShowID"].Visible = false;
@@ -93,43 +128,56 @@ namespace Ciname.GUI.BookingController
 
             bookingGridView.Columns.Add(btnDetail);
 
-            DataGridViewButtonColumn btnDelete = new DataGridViewButtonColumn
+            if(Setting.Username != null)
             {
-                Name = "Delete",
-                Text = "Delete",
-                UseColumnTextForButtonValue = true
-            };
-
-            bookingGridView.Columns.Add(btnDelete);
-            numberOfBooking.Text = (bookingGridView.Rows.Count - 1).ToString();
-            foreach (DataRow dr in dataTable.Rows)
-            {
-                String seat = ((string)dr["SeatStatus"]).Trim();
-                for (int j = 0; j < seat.Length; j++)
+                DataGridViewButtonColumn btnDelete = new DataGridViewButtonColumn
                 {
-                    if (seat[j].Equals('1'))
+                    Name = "Delete",
+                    Text = "Delete",
+                    UseColumnTextForButtonValue = true
+                };
+
+                bookingGridView.Columns.Add(btnDelete);
+            }
+
+            numberOfBooking.Text = (bookingGridView.Rows.Count - 1).ToString();
+            if (this.seats != null)
+            {
+                foreach (DataRow dr in dataTable.Rows)
+                {
+                    String seat = ((string)dr["SeatStatus"]).Trim();
+                    for (int j = 0; j < seat.Length; j++)
                     {
-                        this.seats[j] = '1';
+                        if (seat[j].Equals('1'))
+                        {
+                            this.seats[j] = '1';
+                        }
                     }
                 }
+                UpDateCheckBox();
             }
-            UpDateCheckBox();
         }
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            BookingAddOrEditGUI bookingAddOrEditGUI = new BookingAddOrEditGUI(null, show, this.seats);
-            DialogResult dialogResult =  bookingAddOrEditGUI.ShowDialog();
-            if(dialogResult == DialogResult.OK)
+            if (Setting.Username != null)
             {
-                DataTable dataTable = BookingDAO.findByShowDataTable(show.ShowId);
-                bookingGridView.Columns.Clear();
-                bookingGridView.Refresh();
-                if(bookingGridView.Rows.Count > 0)
+                if(show!=null && this.seats != null)
                 {
-                    bookingGridView.Rows.Clear();
+                    BookingAddOrEditGUI bookingAddOrEditGUI = new BookingAddOrEditGUI(null, show, this.seats);
+                    DialogResult dialogResult = bookingAddOrEditGUI.ShowDialog();
+                    if (dialogResult == DialogResult.OK)
+                    {
+                        DataTable dataTable = BookingDAO.findByShowDataTable(show.ShowId);
+                        bookingGridView.Columns.Clear();
+                        bookingGridView.Refresh();
+                        if (bookingGridView.Rows.Count > 0)
+                        {
+                            bookingGridView.Rows.Clear();
+                        }
+                        loadData(dataTable);
+                    }
                 }
-                loadData(dataTable);
             }
         }
 
@@ -143,28 +191,33 @@ namespace Ciname.GUI.BookingController
             if (e.RowIndex < bookingGridView.Rows.Count - 1 && e.RowIndex >=0 )
             {
                 int bookingId = (int)bookingGridView.Rows[e.RowIndex].Cells["BookingID"].Value;
-                Booking booking = BookingDAO.Get(bookingId);
-                if (e.ColumnIndex == bookingGridView.Columns["Delete"].Index)
+                Booking? booking = BookingDAO.Get(bookingId);
+                if(booking != null)
                 {
-                    DialogResult dialogResult =
-                        MessageBox.Show("Do you wan't delete?", null, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (dialogResult == DialogResult.Yes)
+                    if (Setting.Username!=null && bookingGridView.Columns["Delete"]!=null 
+                        && e.ColumnIndex == bookingGridView.Columns["Delete"].Index)
                     {
-                        BookingDAO.Delete(booking.BookingId);
-                        bookingGridView.Columns.Clear();
-                        if (bookingGridView.Rows.Count > 0)
+                        DialogResult dialogResult =
+                            MessageBox.Show("Do you wan't delete?", null, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (dialogResult == DialogResult.Yes)
                         {
-                            bookingGridView.Rows.Clear();
+                            BookingDAO.Delete(booking.BookingId);
+                            bookingGridView.Columns.Clear();
+                            if (bookingGridView.Rows.Count > 0)
+                            {
+                                bookingGridView.Rows.Clear();
+                            }
+                            bookingGridView.Refresh();
+                            DataTable dataTable = BookingDAO.findByShowDataTable(show.ShowId);
+                            loadData(dataTable);
                         }
-                        bookingGridView.Refresh();
-                        DataTable dataTable = BookingDAO.findByShowDataTable(show.ShowId);
-                        loadData(dataTable);
                     }
-                }
-                else if (e.ColumnIndex == bookingGridView.Columns["Detail"].Index)
-                {
-                    BookingDetailGUI bookingDetailGUI = new BookingDetailGUI(booking, show);
-                    bookingDetailGUI.ShowDialog();
+                    else if (bookingGridView.Columns["Detail"]!=null 
+                        && e.ColumnIndex == bookingGridView.Columns["Detail"].Index)
+                    {
+                        BookingDetailGUI bookingDetailGUI = new BookingDetailGUI(booking, show);
+                        bookingDetailGUI.ShowDialog();
+                    }
                 }
             }   
         }

@@ -48,8 +48,8 @@ namespace Ciname.GUI.ShowControl
             {
                 DataGridViewButtonColumn btnBooking = new DataGridViewButtonColumn
                 {
-                    Name = "Booking",
-                    Text = "Booking",
+                    Name = "Bookings",
+                    Text = "Bookings",
                     UseColumnTextForButtonValue = true
                 };
 
@@ -78,8 +78,8 @@ namespace Ciname.GUI.ShowControl
             {
                 DataGridViewButtonColumn btnBooking = new DataGridViewButtonColumn
                 {
-                    Name = "Booking",
-                    Text = "View seat",
+                    Name = "Bookings",
+                    Text = "Bookings",
                     UseColumnTextForButtonValue = true
                 };
 
@@ -98,12 +98,12 @@ namespace Ciname.GUI.ShowControl
             if (e.RowIndex< showGridView.Rows.Count-1 && e.RowIndex >= 0) 
             {
                 int showId = (int)showGridView.Rows[e.RowIndex].Cells["ShowID"].Value;
-                Show show = ShowDAO.get(showId);
+                Show? show = ShowDAO.get(showId);
                 if (Setting.Username != null)
                 {
                     if (e.ColumnIndex == showGridView.Columns["Edit"].Index)
                     {
-                        ShowAddEditGUI showAddEditGUI = new ShowAddEditGUI(show);
+                        ShowAddEditGUI showAddEditGUI = new ShowAddEditGUI(show, this.dateTimePicker.Value);
                         DialogResult dialogResult = showAddEditGUI.ShowDialog();
                         if (dialogResult == DialogResult.OK)
                         {
@@ -126,7 +126,7 @@ namespace Ciname.GUI.ShowControl
                             loadData(dataTable);
                         }
                     }
-                    else if (e.ColumnIndex == showGridView.Columns["Booking"].Index)
+                    else if (e.ColumnIndex == showGridView.Columns["Bookings"].Index)
                     {
                         BookingGUI bookingGUI = new BookingGUI(show);
                         DialogResult dialogResult = bookingGUI.ShowDialog();
@@ -134,10 +134,10 @@ namespace Ciname.GUI.ShowControl
                 }
                 else
                 {
-                    if (e.ColumnIndex == showGridView.Columns["Booking"].Index)
+                    if (e.ColumnIndex == showGridView.Columns["Bookings"].Index)
                     {
-                        ViewSeatGUI viewSeatGUI = new ViewSeatGUI(show);
-                        DialogResult dialogResult = viewSeatGUI.ShowDialog();
+                        BookingGUI bookingGUI = new BookingGUI(show);
+                        DialogResult dialogResult = bookingGUI.ShowDialog();
                     }
                 }
 
@@ -149,7 +149,7 @@ namespace Ciname.GUI.ShowControl
         {
             if (Setting.Username != null)
             {
-                ShowAddEditGUI showAddEditGUI = new ShowAddEditGUI(null);
+                ShowAddEditGUI showAddEditGUI = new ShowAddEditGUI(null, this.dateTimePicker.Value);
                 DialogResult dialogResult = showAddEditGUI.ShowDialog();
                 if (dialogResult == DialogResult.OK)
                 {

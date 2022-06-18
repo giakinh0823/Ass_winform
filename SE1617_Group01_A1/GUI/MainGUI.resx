@@ -70,7 +70,7 @@
   <data name="CinameToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAyAAAAMgCAYAAADbcAZoAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAP+lSURBVHhe7J0HnFxXdf/vvHnvTS/bVd2NDQZMC733GhJI
+        YQUAAAAJcEhZcwAAGdYAABnWARjRyu0AAP+lSURBVHhe7J0HnFxXdf/vvHnvTS/bVd2NDQZMC733GhJI
         gBRKCC30FqpprurS7mp7L7O9qdmyTYAACYSQBP6Eboy7elt12fLvf3539i0r+YHtWLuSrDMffT/vzZ3Z
         mTfaN7PnO+eee4wZGICiKIqiKIqiKMqcEDqoKIqiKIqiKIoyG4QOKoqiKIqiKIqizAahg4qiKIqiKIqi
         KLNB6KCiKIqiKIqiKMpsEDqoKIqiKIqiKIoyG4QOKoqiKIqiKIqizAahg4qiKIqiKIqiKLNB6KCiKIqi
@@ -5531,7 +5531,7 @@
   <data name="ProfileToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAABXgAAAV4CAYAAAAaC7U3AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAP+lSURBVHhe7N0HfFRl3v/9Ib03ekcBCyKK9N57DwmhgwUF
+        YQUAAAAJcEhZcwAAGdYAABnWARjRyu0AAP+lSURBVHhe7N0HfFRl3v/9Ib03ekcBCyKK9N57DwmhgwUF
         sTdEEVGx996Vlh66goq913XdXdd113XtuxZImTQgyfc51zU5yWQIqPd/7+feWT/ZfXvOnDlTUshLP17+
         jie3dKYAAAAAAAAAAMGHwAsAAAAAAAAAQYrACwAAAAAAAABBypPjTRUAAAAAAAAAIPgQeAEAAAAAAAAg
         SDGiAQAAAAAAAACCFIEXAAAAAAAAAIIUgRcAAAAAAAAAghSBFwAAAAAAAACCFIEXAAAAAAAAAIIUgRcA
@@ -16914,6 +16914,6 @@
 </value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>25</value>
+    <value>111</value>
   </metadata>
 </root>
