@@ -45,6 +45,8 @@ namespace Ciname.DAL
             if (dataTable != null && dataTable.Rows != null && dataTable.Rows.Count > 0)
             {
                 DataRow dr = dataTable.Rows[0];
+                bool status = false;
+                bool.TryParse(dr["status"].ToString(), out status);
                 return new Show()
                 {
                     ShowId = (int)dr["ShowID"],
@@ -52,7 +54,7 @@ namespace Ciname.DAL
                     FilmId = (int)dr["FilmID"],
                     ShowDate = (DateTime)dr["ShowDate"],
                     Price = (decimal)dr["Price"],
-                    Status = (bool)dr["status"],
+                    Status = status,
                     Slot = (int)dr["Slot"]
                 };
             }
@@ -79,6 +81,8 @@ namespace Ciname.DAL
             if (dataTable != null && dataTable.Rows != null && dataTable.Rows.Count > 0)
             {
                 DataRow dr = dataTable.Rows[0];
+                bool status = false;
+                bool.TryParse(dr["status"].ToString(), out status);
                 return new Show()
                 {
                     ShowId = (int)dr["ShowID"],
@@ -86,7 +90,7 @@ namespace Ciname.DAL
                     FilmId = (int)dr["FilmID"],
                     ShowDate = (DateTime)dr["ShowDate"],
                     Price = (decimal)dr["Price"],
-                    Status = (bool)dr["status"],
+                    Status = status,
                     Slot = (int)dr["Slot"]
                 };
             }
@@ -110,6 +114,8 @@ namespace Ciname.DAL
                 List<Show> list = new List<Show>();
                 foreach (DataRow dr in dataTable.Rows)
                 {
+                    bool status = false;
+                    bool.TryParse(dr["status"].ToString(), out status);
                     list.Add(new Show()
                     {
                         ShowId = (int)dr["ShowID"],
@@ -117,7 +123,7 @@ namespace Ciname.DAL
                         FilmId = (int)dr["FilmID"],
                         ShowDate = (DateTime)dr["ShowDate"],
                         Price = (decimal)dr["Price"],
-                        Status = (bool)dr["status"],
+                        Status = status,
                         Slot = (int)dr["Slot"]
                     });
                 }
@@ -145,6 +151,8 @@ namespace Ciname.DAL
                 List<Show> list = new List<Show>();
                 foreach (DataRow dr in dataTable.Rows)
                 {
+                    bool status = false;
+                    bool.TryParse(dr["status"].ToString(), out status);
                     list.Add(new Show()
                     {
                         ShowId = (int)dr["ShowID"],
@@ -152,7 +160,7 @@ namespace Ciname.DAL
                         FilmId = (int)dr["FilmID"],
                         ShowDate = (DateTime)dr["ShowDate"],
                         Price = (decimal)dr["Price"],
-                        Status = (bool)dr["status"],
+                        Status = status,
                         Slot = (int)dr["Slot"]
                     });
                 }
@@ -183,6 +191,8 @@ namespace Ciname.DAL
                 List<Show> list = new List<Show>();
                 foreach (DataRow dr in dataTable.Rows)
                 {
+                    bool status = false;
+                    bool.TryParse(dr["status"].ToString(), out status);
                     list.Add(new Show()
                     {
                         ShowId = (int)dr["ShowID"],
@@ -190,7 +200,7 @@ namespace Ciname.DAL
                         FilmId = (int)dr["FilmID"],
                         ShowDate = (DateTime)dr["ShowDate"],
                         Price = (decimal)dr["Price"],
-                        Status = (bool)dr["status"],
+                        Status = status,
                         Slot = (int)dr["Slot"]
                     });
                 }
