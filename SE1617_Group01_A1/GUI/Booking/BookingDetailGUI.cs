@@ -1,5 +1,4 @@
-﻿using Ciname.DAL;
-using Ciname.DTL;
+﻿using SE1617_Group01_A1.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +13,7 @@ namespace Ciname.GUI.BookingController
 {
     public partial class BookingDetailGUI : Form
     {
+        private CinemaContext context;
         private Booking? booking = null;
         private Show? show = null;
         public CheckBox[]? checkBoxes = null;
@@ -22,27 +22,27 @@ namespace Ciname.GUI.BookingController
 
         public BookingDetailGUI()
         {
+            context = new CinemaContext();
             InitializeComponent();
         }
 
         public BookingDetailGUI(Booking? booking, Show? show)
         {
+            context = new CinemaContext();
             InitializeComponent();
             this.show = show;
-            Room? room = show != null ? RoomDAO.Get(show.RoomId) : null;
-            this.col = room != null ? room.NumberCols : 0;
-            this.row = room != null ? room.NumberRows : 0;
+            Room? room = show != null ? context.Rooms.First<Room>(room => room.RoomId == show.RoomId) : null;
+            if (room != null)
+            {
+                this.col = room.NumberCols ?? default(int);
+                this.row = room.NumberRows ?? default(int);
+            }
             checkBoxes = new CheckBox[this.col * this.row];
             if (booking != null)
             {
                 this.booking = booking;
                 this.textBoxName.Text = booking.Name;
                 this.textBoxAmount.Text = booking.Amount.ToString();
-                if (Setting.Username == null)
-                {
-                    this.textBoxName.Enabled = false;
-                    this.textBoxAmount.Enabled = false;
-                }
                 CreateCheckbox();
             }
             else

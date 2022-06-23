@@ -44,6 +44,8 @@
             // 
             // showGridView
             // 
+            this.showGridView.AllowUserToAddRows = false;
+            this.showGridView.AllowUserToDeleteRows = false;
             this.showGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.showGridView.Location = new System.Drawing.Point(19, 434);
             this.showGridView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SE1617_Group01_A1.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,41 +8,49 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Ciname.DAL;
-using Ciname.DTL;
 
 namespace Ciname.GUI.ShowControl
 {
     public partial class ShowAddEditGUI : Form
     {
+        private CinemaContext context;
         private Show? show = null;
-        public ShowAddEditGUI(Show? show, DateTime datetime)
+        public ShowAddEditGUI(Show? show)
         {
+            context = new CinemaContext();
             InitializeComponent();
-            List<Room> rooms = RoomDAO.List();
+            if (show == null)
+            {
+                this.dateTimePicker.Value = DateTime.Now;
+            }
+            List<Room> rooms = context.Rooms.ToList();
             List<Room> newRooms = new List<Room>();
             foreach (Room room in rooms)
             {
-                if (show != null)
+                if(show != null)
                 {
-                    List<Show>? listShows = ShowDAO.GetItemByDate(datetime, room.RoomId);
-                    if (room.RoomId == room.RoomId || listShows == null || listShows.Count < 9)
+                    List<Show>? listShows = context.Shows.Where(item => item.ShowDate == show.ShowDate && item.RoomId == room.RoomId)
+                                            .ToList();
+                    if ( room.RoomId == room.RoomId || listShows == null || listShows.Count < 9)
                     {
                         newRooms.Add(room);
                     }
                 }
-                else {
-                    List<Show>? listShows = ShowDAO.GetItemByDate(datetime, room.RoomId);
-                    if(listShows==null || listShows.Count < 9)
+                else
+                {
+                    List<Show>? listShows = context.Shows.Where(item => item.ShowDate == this.dateTimePicker.Value && item.RoomId == room.RoomId)
+                                            .ToList();
+                    if (listShows == null || listShows.Count < 9)
                     {
                         newRooms.Add(room);
                     }
-                }
+                } 
+                
             }
             this.cBoxRoom.DataSource = newRooms;
             this.cBoxRoom.DisplayMember = "Name";
             this.cBoxRoom.ValueMember = "RoomId";
-            this.cBoxFilm.DataSource = FilmDAO.GetDataTable();
+            this.cBoxFilm.DataSource = context.Films.ToList<Film>();
             this.cBoxFilm.DisplayMember = "Title";
             this.cBoxFilm.ValueMember = "FilmId";
             this.cBoxRoom.Enabled = false;
@@ -50,13 +59,14 @@ namespace Ciname.GUI.ShowControl
             if (show != null)
             {
                 List<dynamic> listSlot = new List<dynamic>();
-                List<Show>? list = ShowDAO.GetItemByDate(show.ShowDate, show.RoomId);
-                if (list != null && list.Count > 0)
+                List<Show>? listShows = context.Shows.Where(item => item.ShowDate == show.ShowDate && item.RoomId == show.RoomId)
+                                            .ToList();
+                if (listShows != null && listShows.Count > 0)
                 {
                     for(int i=0; i< 9; i++)
                     {
                         bool isHas = false;
-                        foreach (Show item in list)
+                        foreach (Show item in listShows)
                         {
                             if(item.Slot != show.Slot)
                             {
@@ -79,7 +89,7 @@ namespace Ciname.GUI.ShowControl
 
 
                 this.show=show;
-                dateTimePicker.Value = show.ShowDate;
+                dateTimePicker.Value = show.ShowDate ?? default(DateTime); 
                 this.cBoxRoom.SelectedValue = show.RoomId;
                 this.cBoxSlot.SelectedValue = show.Slot;
                 this.textBoxPrice.Text = show.Price.ToString();
@@ -87,16 +97,18 @@ namespace Ciname.GUI.ShowControl
             }
             else
             {
-                if(newRooms!=null && newRooms.Count > 0)
+                this.dateTimePicker.Value = DateTime.Now;
+                if (newRooms!=null && newRooms.Count > 0)
                 {
-                    List<Show>? list = ShowDAO.GetItemByDate(datetime, newRooms[0].RoomId);
+                    List<Show>? listShows = context.Shows.Where(item => item.ShowDate == this.dateTimePicker.Value && item.RoomId == newRooms[0].RoomId)
+                                           .ToList();
                     List<dynamic> listSlot = new List<dynamic>();
-                    if (list != null && list.Count > 0)
+                    if (listShows != null && listShows.Count > 0)
                     {
                         for (int i = 0; i < 9; i++)
                         {
                             bool isHas = false;
-                            foreach (Show item in list)
+                            foreach (Show item in listShows)
                             {
                                 if (i + 1 == item.Slot)
                                 {
@@ -124,7 +136,6 @@ namespace Ciname.GUI.ShowControl
                         this.cBoxSlot.DisplayMember = "Value";
                     }
                     this.show = null;
-                    this.dateTimePicker.Value = datetime;
                 }
                 else
                 {
@@ -172,7 +183,7 @@ namespace Ciname.GUI.ShowControl
                 int film = filmParam!=null ? int.Parse(filmParam): -1;
                 if(slot!=-1 && film != -1)
                 {
-                    if (ShowDAO.GetItemByDateAndSlotAndRoom(show.ShowDate, slot, show.RoomId) != null)
+                    if (context.Shows.FirstOrDefault<Show>(item => item.ShowDate == show.ShowDate && item.Slot == slot && item.RoomId == show.RoomId) != null)
                     {
                         MessageBox.Show("Slot has been selected!");
                         this.DialogResult = DialogResult.None;
@@ -181,7 +192,7 @@ namespace Ciname.GUI.ShowControl
                     show.Slot = slot;
                     show.FilmId = film;
                     show.Price = price;
-                    ShowDAO.Update(show);
+                    context.Shows.Update(show);
                     MessageBox.Show("That show edited!");
                 }
                 else
@@ -198,7 +209,7 @@ namespace Ciname.GUI.ShowControl
                 int film = filmParam != null ? int.Parse(filmParam) : -1;
                 if (roomId!=-1 && slot != -1 && film!=-1)
                 {
-                    if (ShowDAO.GetItemByDateAndSlotAndRoom(this.dateTimePicker.Value, slot, roomId) == null)
+                    if (context.Shows.FirstOrDefault<Show>(item => (item.ShowDate == dateTimePicker.Value && item.Slot == slot && item.RoomId == roomId)) == null)
                     {
                         show = new Show();
                         show.ShowDate = this.dateTimePicker.Value;
@@ -206,7 +217,8 @@ namespace Ciname.GUI.ShowControl
                         show.Slot = slot;
                         show.FilmId = film;
                         show.Price = price;
-                        ShowDAO.Insert(show);
+                        context.Shows.Add(show);
+                        context.SaveChanges();
                         MessageBox.Show("A new show added!");
                     }
                     else

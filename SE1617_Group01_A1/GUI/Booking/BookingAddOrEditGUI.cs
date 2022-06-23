@@ -1,5 +1,4 @@
-﻿using Ciname.DAL;
-using Ciname.DTL;
+﻿using SE1617_Group01_A1.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,6 +14,7 @@ namespace Ciname.GUI.BookingController
 
     public partial class BookingAddOrEditGUI : Form
     {
+        private CinemaContext context;
         private Booking? booking = null;
         private Show? show = null;
         public CheckBox[]? checkBoxes = null;
@@ -24,26 +24,29 @@ namespace Ciname.GUI.BookingController
 
         public BookingAddOrEditGUI(Booking? booking, Show? show, char[] seats)
         {
-            if (Setting.Username!=null)
+            context = new CinemaContext();
+            InitializeComponent();
+            Room? room = show != null ? context.Rooms.First<Room>(room => room.RoomId == show.RoomId) : null;
+            if (room != null)
             {
-                InitializeComponent();
-                Room? room = show != null ? RoomDAO.Get(show.RoomId) : null;
-                this.col = room != null ? room.NumberCols : 0;
-                this.row = room != null ? room.NumberRows : 0;
-                checkBoxes = new CheckBox[this.col * this.row];
-                this.show = show;
-                this.seats = seats;
-                if (booking != null)
-                {
-                    this.booking = booking;
-                    CreateCheckbox();
-                }
-                else
-                {
-                    this.booking = null;
-                    CreateCheckbox();
-                }
+                this.col = room.NumberCols ?? default(int);
+                this.row = room.NumberRows ?? default(int);
             }
+            checkBoxes = new CheckBox[this.col * this.row];
+            this.show = show;
+            this.seats = seats;
+            if (booking != null)
+            {
+                this.booking = booking;
+                CreateCheckbox();
+            }
+            else
+            {
+                this.booking = null;
+                CreateCheckbox();
+            }
+            this.textBoxAmount.Enabled = false;
+            this.textBoxAmount.Text = "0"; 
 
         }
 
@@ -65,6 +68,7 @@ namespace Ciname.GUI.BookingController
                         checkBox.Width = 84;
                         checkBox.AutoSize = true;
                         checkBox.Anchor = AnchorStyles.None;
+                        checkBox.MouseClick += CheckBox_MouseClick;
                         checkBoxes[count] = checkBox;
                         count++;
                         this.flowLayoutPanel.Controls.Add(checkBox);
@@ -78,35 +82,29 @@ namespace Ciname.GUI.BookingController
             }
         }
 
+        private void CheckBox_MouseClick(object? sender, MouseEventArgs e)
+        {
+            if (checkBoxes != null)
+            {
+                int count = 0;
+                for (int i = 0; i < checkBoxes.Length; i++)
+                {
+                    if (checkBoxes[i].Checked && checkBoxes[i].Enabled == true)
+                    {
+                        count += 1;
+                    }
+                }
+                this.textBoxAmount.Text = show != null ? (show.Price * count).ToString() : "0";
+            }
+        }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (this.show != null)
             {
                 string name = this.textBoxName.Text;
                 string amountParam = this.textBoxAmount.Text;
-                decimal amount;
-                try
-                {
-                    amount = decimal.Parse(amountParam);
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Amount must a double!");
-                    this.DialogResult = DialogResult.None;
-                    return;
-                }
-                if (amount <= 0)
-                {
-                    MessageBox.Show("Amount must be >= 0!");
-                    this.DialogResult = DialogResult.None;
-                    return;
-                }
-                if (string.IsNullOrEmpty(name))
-                {
-                    MessageBox.Show("Name must be not empty!");
-                    this.DialogResult = DialogResult.None;
-                    return;
-                }
+                decimal amount = decimal.Parse(amountParam);
                 bool isChoose = false;
                 string seats = "";
                 if (checkBoxes != null)
@@ -141,7 +139,8 @@ namespace Ciname.GUI.BookingController
                 booking.Amount = amount;
                 booking.SeatStatus = seats;
                 booking.ShowId = this.show.ShowId;
-                BookingDAO.Insert(booking);
+                context.Bookings.Add(booking);
+                context.SaveChanges();
             }
         }
     }

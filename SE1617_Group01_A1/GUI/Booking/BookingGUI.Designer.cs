@@ -41,6 +41,8 @@
             // 
             // bookingGridView
             // 
+            this.bookingGridView.AllowUserToAddRows = false;
+            this.bookingGridView.AllowUserToDeleteRows = false;
             this.bookingGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.bookingGridView.Location = new System.Drawing.Point(15, 554);
             this.bookingGridView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);

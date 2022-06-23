@@ -1,5 +1,4 @@
-﻿using Ciname.DAL;
-using Ciname.DTL;
+﻿using SE1617_Group01_A1.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +13,7 @@ namespace Ciname.GUI.BookingController
 {
     public partial class BookingGUI : Form
     {
+        private CinemaContext context;
         private Show? show = null;
         private CheckBox[]? checkBoxes = null;
         private int col = 0;
@@ -21,26 +21,25 @@ namespace Ciname.GUI.BookingController
         private char[]? seats = null;
         public BookingGUI(Show? show)
         {
+            context = new CinemaContext();
             InitializeComponent();
-            Room? room = show!= null? RoomDAO.Get(show.RoomId): null;
-            this.col = room!=null ? room.NumberCols : 0;
-            this.row = room != null ? room.NumberRows : 0;
+            Room? room = show!= null ? context.Rooms.First<Room>(room => room.RoomId == show.RoomId): null;
+            if (room != null) {
+                this.col = room.NumberCols ?? default(int);
+                this.row = room.NumberRows ?? default(int);
+            }
             checkBoxes = new CheckBox[this.col * this.row];
             seats = new char[this.col * this.row];
             if (show != null)
             {
                 CreateCheckbox();
                 this.show = show;
-                DataTable dataTable = BookingDAO.findByShowDataTable(show.ShowId);
-                loadData(dataTable);
+                List<Booking> bookings = context.Bookings.OrderByDescending(item => item.BookingId).Where<Booking>(book => book.ShowId == this.show.ShowId).ToList();
+                loadData(bookings);
             }
             else
             {
                 this.show = null;
-            }
-            if (Setting.Username == null)
-            {
-                this.btnCreate.Visible = false;
             }
         }
         public void CreateCheckbox()
@@ -109,13 +108,13 @@ namespace Ciname.GUI.BookingController
 
         }
 
-        private void loadData(DataTable dataTable)
+        private void loadData(List<Booking> bookings)
         {
             if (this.seats != null)
             {
                 Array.Fill(this.seats, '0');
             }
-            bookingGridView.DataSource = dataTable;
+            bookingGridView.DataSource = bookings;
             bookingGridView.Columns["BookingID"].Visible = false;
             bookingGridView.Columns["ShowID"].Visible = false;
 
@@ -140,12 +139,12 @@ namespace Ciname.GUI.BookingController
                 bookingGridView.Columns.Add(btnDelete);
             }
 
-            numberOfBooking.Text = (bookingGridView.Rows.Count - 1).ToString();
+            numberOfBooking.Text = (bookingGridView.Rows.Count).ToString();
             if (this.seats != null)
             {
-                foreach (DataRow dr in dataTable.Rows)
+                foreach (Booking booking in bookings)
                 {
-                    String seat = ((string)dr["SeatStatus"]).Trim();
+                    String seat = booking.SeatStatus.ToString();
                     for (int j = 0; j < seat.Length; j++)
                     {
                         if (seat[j].Equals('1'))
@@ -160,23 +159,20 @@ namespace Ciname.GUI.BookingController
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            if (Setting.Username != null)
+            if (show != null && this.seats != null)
             {
-                if(show!=null && this.seats != null)
+                BookingAddOrEditGUI bookingAddOrEditGUI = new BookingAddOrEditGUI(null, show, this.seats);
+                DialogResult dialogResult = bookingAddOrEditGUI.ShowDialog();
+                if (dialogResult == DialogResult.OK)
                 {
-                    BookingAddOrEditGUI bookingAddOrEditGUI = new BookingAddOrEditGUI(null, show, this.seats);
-                    DialogResult dialogResult = bookingAddOrEditGUI.ShowDialog();
-                    if (dialogResult == DialogResult.OK)
+                    bookingGridView.Columns.Clear();
+                    bookingGridView.Refresh();
+                    if (bookingGridView.Rows.Count > 0)
                     {
-                        DataTable dataTable = BookingDAO.findByShowDataTable(show.ShowId);
-                        bookingGridView.Columns.Clear();
-                        bookingGridView.Refresh();
-                        if (bookingGridView.Rows.Count > 0)
-                        {
-                            bookingGridView.Rows.Clear();
-                        }
-                        loadData(dataTable);
+                        bookingGridView.Rows.Clear();
                     }
+                    List<Booking> bookings = context.Bookings.OrderByDescending(item => item.BookingId).Where<Booking>(book => book.ShowId == this.show.ShowId).ToList();
+                    loadData(bookings);
                 }
             }
         }
@@ -188,10 +184,10 @@ namespace Ciname.GUI.BookingController
 
         private void bookingGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < bookingGridView.Rows.Count - 1 && e.RowIndex >=0 )
+            if (e.RowIndex < bookingGridView.Rows.Count && e.RowIndex >=0 )
             {
                 int bookingId = (int)bookingGridView.Rows[e.RowIndex].Cells["BookingID"].Value;
-                Booking? booking = BookingDAO.Get(bookingId);
+                Booking? booking = context.Bookings.First<Booking>(booking => booking.BookingId == bookingId);
                 if(booking != null)
                 {
                     if (Setting.Username!=null && bookingGridView.Columns["Delete"]!=null 
@@ -201,15 +197,15 @@ namespace Ciname.GUI.BookingController
                             MessageBox.Show("Do you wan't delete?", null, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                         if (dialogResult == DialogResult.Yes)
                         {
-                            BookingDAO.Delete(booking.BookingId);
+                            context.Bookings.Remove(booking);
                             bookingGridView.Columns.Clear();
                             if (bookingGridView.Rows.Count > 0)
                             {
                                 bookingGridView.Rows.Clear();
                             }
                             bookingGridView.Refresh();
-                            DataTable dataTable = BookingDAO.findByShowDataTable(show.ShowId);
-                            loadData(dataTable);
+                            List<Booking> bookings = context.Bookings.OrderByDescending(item => item.BookingId).Where<Booking>(book => book.ShowId == this.show.ShowId).ToList();
+                            loadData(bookings);
                         }
                     }
                     else if (bookingGridView.Columns["Detail"]!=null 

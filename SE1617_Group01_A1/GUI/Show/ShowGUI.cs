@@ -1,6 +1,5 @@
 ﻿using Ciname.GUI.BookingController;
-using Ciname.DAL;
-using Ciname.DTL;
+using SE1617_Group01_A1.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,8 +14,10 @@ namespace Ciname.GUI.ShowControl
 {
     public partial class ShowGUI : Form
     {
+        private CinemaContext context;
         public ShowGUI()
         {
+            context = new CinemaContext();
             InitializeComponent();
             this.btnCreate.Visible = false;
             if (Setting.Username != null)
@@ -27,20 +28,19 @@ namespace Ciname.GUI.ShowControl
 
         private void ShowGUI_Load(object sender, EventArgs e)
         {
-            DataTable dataTable = ShowDAO.GetDataTable();
-            loadData(dataTable);
-            this.comboBoxFilm.DataSource = FilmDAO.GetDataTable();
+            List<Show> shows = context.Shows.OrderByDescending(show => show.ShowId).ToList<Show>();
+            loadData(shows);
+            this.comboBoxFilm.DataSource = context.Films.ToList();
             this.comboBoxFilm.DisplayMember = "Title";
             this.comboBoxFilm.ValueMember = "FilmId";
-            this.comboBoxRoom.DataSource = RoomDAO.GetDataTable();
+            this.comboBoxRoom.DataSource = context.Rooms.ToList();
             this.comboBoxRoom.DisplayMember = "Name";
             this.comboBoxRoom.ValueMember = "RoomId";
         }
 
-        private void loadData(DataTable dataTable) { 
+        private void loadData(List<Show> shows) { 
         
-            showGridView.DataSource = dataTable;
-            int countColumn = dataTable.Columns.Count;
+            showGridView.DataSource = shows;
             showGridView.Columns["ShowID"].Visible = false;
             showGridView.Columns["Status"].Visible = false;
 
@@ -53,7 +53,7 @@ namespace Ciname.GUI.ShowControl
                     UseColumnTextForButtonValue = true
                 };
 
-                showGridView.Columns.Insert(countColumn, btnBooking);
+                showGridView.Columns.Add(btnBooking);
               
 
                 DataGridViewButtonColumn btnEdit = new DataGridViewButtonColumn
@@ -83,7 +83,7 @@ namespace Ciname.GUI.ShowControl
                     UseColumnTextForButtonValue = true
                 };
 
-                showGridView.Columns.Insert(countColumn, btnBooking);
+                showGridView.Columns.Add(btnBooking);
             }
             labelTotalNumber.Text = (showGridView.Rows.Count-1).ToString();
         }
@@ -95,22 +95,22 @@ namespace Ciname.GUI.ShowControl
         
         private void showGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex< showGridView.Rows.Count-1 && e.RowIndex >= 0) 
+            if (e.RowIndex< showGridView.Rows.Count && e.RowIndex >= 0) 
             {
                 int showId = (int)showGridView.Rows[e.RowIndex].Cells["ShowID"].Value;
-                Show? show = ShowDAO.get(showId);
+                Show? show = context.Shows.First<Show>(item => item.ShowId == showId);
                 if (Setting.Username != null)
                 {
                     if (e.ColumnIndex == showGridView.Columns["Edit"].Index)
                     {
-                        ShowAddEditGUI showAddEditGUI = new ShowAddEditGUI(show, this.dateTimePicker.Value);
+                        ShowAddEditGUI showAddEditGUI = new ShowAddEditGUI(show);
                         DialogResult dialogResult = showAddEditGUI.ShowDialog();
                         if (dialogResult == DialogResult.OK)
                         {
                             showGridView.Columns.Clear();
                             showGridView.Refresh();
-                            DataTable dataTable = ShowDAO.GetDataTable();
-                            loadData(dataTable);
+                            List<Show> shows = context.Shows.OrderByDescending(show => show.ShowId).ToList<Show>();
+                            loadData(shows);
                         }
                     }
                     else if (e.ColumnIndex == showGridView.Columns["Delete"].Index)
@@ -119,11 +119,11 @@ namespace Ciname.GUI.ShowControl
                             MessageBox.Show("Do you wan't delete?", null, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                         if (dialogResult == DialogResult.Yes)
                         {
-                            ShowDAO.Delete(showId);
+                            context.Shows.Remove(show);
                             showGridView.Columns.Clear();
                             showGridView.Refresh();
-                            DataTable dataTable = ShowDAO.GetDataTable();
-                            loadData(dataTable);
+                            List<Show> shows = context.Shows.OrderByDescending(show => show.ShowId).ToList<Show>();
+                            loadData(shows);
                         }
                     }
                     else if (e.ColumnIndex == showGridView.Columns["Bookings"].Index)
@@ -149,14 +149,14 @@ namespace Ciname.GUI.ShowControl
         {
             if (Setting.Username != null)
             {
-                ShowAddEditGUI showAddEditGUI = new ShowAddEditGUI(null, this.dateTimePicker.Value);
+                ShowAddEditGUI showAddEditGUI = new ShowAddEditGUI(null);
                 DialogResult dialogResult = showAddEditGUI.ShowDialog();
                 if (dialogResult == DialogResult.OK)
                 {
                     showGridView.Columns.Clear();
                     showGridView.Refresh();
-                    DataTable dataTable = ShowDAO.GetDataTable();
-                    loadData(dataTable);
+                   List<Show> shows = context.Shows.OrderByDescending(show => show.ShowId).ToList<Show>();
+                    loadData(shows);
                 }
             }
         }
@@ -175,12 +175,12 @@ namespace Ciname.GUI.ShowControl
         {
             string? roomParam = this.comboBoxRoom.SelectedValue.ToString();
             string? filmParam = this.comboBoxFilm.SelectedValue.ToString();
-            int roomId = int.Parse(roomParam);
-            int filmId = int.Parse(filmParam);
+            int? roomId = roomParam!=null ? int.Parse(roomParam) : null;
+            int? filmId = filmParam!=null ? int.Parse(filmParam) : null;
             showGridView.Columns.Clear();
             showGridView.Refresh();
-            DataTable dataTable = ShowDAO.FindByRoomAndFilmAndDateDataTable(this.dateTimePicker.Value, filmId, roomId);
-            loadData(dataTable);
+            List<Show> shows = context.Shows.Where(item => (item.RoomId == roomId && item.FilmId == filmId && item.ShowDate == this.dateTimePicker.Value)).ToList();
+            loadData(shows);
             labelTotalNumber.Text = (showGridView.Rows.Count-1).ToString();
         }
 
