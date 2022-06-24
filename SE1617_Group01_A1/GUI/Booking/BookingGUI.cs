@@ -127,17 +127,14 @@ namespace Ciname.GUI.BookingController
 
             bookingGridView.Columns.Add(btnDetail);
 
-            if(Setting.Username != null)
+            DataGridViewButtonColumn btnDelete = new DataGridViewButtonColumn
             {
-                DataGridViewButtonColumn btnDelete = new DataGridViewButtonColumn
-                {
-                    Name = "Delete",
-                    Text = "Delete",
-                    UseColumnTextForButtonValue = true
-                };
+                Name = "Delete",
+                Text = "Delete",
+                UseColumnTextForButtonValue = true
+            };
 
-                bookingGridView.Columns.Add(btnDelete);
-            }
+            bookingGridView.Columns.Add(btnDelete);
 
             numberOfBooking.Text = (bookingGridView.Rows.Count).ToString();
             if (this.seats != null)
@@ -190,7 +187,7 @@ namespace Ciname.GUI.BookingController
                 Booking? booking = context.Bookings.First<Booking>(booking => booking.BookingId == bookingId);
                 if(booking != null)
                 {
-                    if (Setting.Username!=null && bookingGridView.Columns["Delete"]!=null 
+                    if (bookingGridView.Columns["Delete"]!=null 
                         && e.ColumnIndex == bookingGridView.Columns["Delete"].Index)
                     {
                         DialogResult dialogResult =
@@ -198,6 +195,7 @@ namespace Ciname.GUI.BookingController
                         if (dialogResult == DialogResult.Yes)
                         {
                             context.Bookings.Remove(booking);
+                            context.SaveChanges();
                             bookingGridView.Columns.Clear();
                             if (bookingGridView.Rows.Count > 0)
                             {

@@ -43,6 +43,8 @@ namespace Ciname.GUI.BookingController
                 this.booking = booking;
                 this.textBoxName.Text = booking.Name;
                 this.textBoxAmount.Text = booking.Amount.ToString();
+                this.textBoxName.Enabled = false;
+                this.textBoxAmount.Enabled = false;
                 CreateCheckbox();
             }
             else

@@ -120,6 +120,7 @@ namespace Ciname.GUI.ShowControl
                         if (dialogResult == DialogResult.Yes)
                         {
                             context.Shows.Remove(show);
+                            context.SaveChanges();
                             showGridView.Columns.Clear();
                             showGridView.Refresh();
                             List<Show> shows = context.Shows.OrderByDescending(show => show.ShowId).ToList<Show>();

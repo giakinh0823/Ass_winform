@@ -80,7 +80,7 @@
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(141, 58);
             this.btnCancel.TabIndex = 16;
-            this.btnCancel.Text = "Cancel";
+            this.btnCancel.Text = "Back";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
             // flowLayoutPanel
